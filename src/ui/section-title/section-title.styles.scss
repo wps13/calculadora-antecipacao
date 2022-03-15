@@ -1,0 +1,9 @@
+@import "../_colors.scss";
+@import "../_sizes.scss";
+
+.section-title {
+  color: $blue_dark;
+  font-size: $title_section;
+  line-height: $section-title__line-height;
+  font-style: italic;
+}
