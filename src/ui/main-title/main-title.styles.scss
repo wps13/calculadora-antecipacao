@@ -1,0 +1,8 @@
+@import "../_colors.scss";
+@import "../_sizes.scss";
+
+.main-title {
+  font-size: $text_title;
+  line-height: $main_title__line-height;
+  color: $grey_dark;
+}

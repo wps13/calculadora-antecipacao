@@ -7,7 +7,12 @@ module.exports = {
   collectCoverageFrom: [
     "<rootDir>/**/*.{js,jsx}",
     "!**/node_modules/**",
-    "!**/vendor/**"
+    "!**/vendor/**",
+    "!<rootDir>/*.config.js",
+    "!<rootDir>/.storybook/**",
+    "!<rootDir>/config/**",
+    "!<rootDir>/coverage/**",
+    "!<rootDir>/src/stories/**"
   ],
   coverageDirectory: "<rootDir>/coverage",
   globals: {
