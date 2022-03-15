@@ -5,10 +5,19 @@ import PropTypes from "prop-types";
 import "./input.styles.scss";
 
 const Input = (props) => {
-  const { onChanged, placeholder, value, required, type, label, name } = props;
+  const {
+    onChanged,
+    placeholder,
+    value,
+    required,
+    type,
+    label,
+    name,
+    classname
+  } = props;
 
   return (
-    <div className="ui-input__container">
+    <div className={`ui-input__container ${classname}`}>
       <label className="ui-input__label" htmlFor={name}>
         {label}
       </label>
@@ -31,7 +40,8 @@ Input.defaultProps = {
   required: true,
   type: "text",
   placeholder: "",
-  onChanged: () => {}
+  onChanged: () => {},
+  classname: ""
 };
 
 Input.propTypes = {
@@ -40,5 +50,6 @@ Input.propTypes = {
   type: PropTypes.string,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  onChanged: PropTypes.func
+  onChanged: PropTypes.func,
+  classname: PropTypes.string
 };
