@@ -1,0 +1,11 @@
+@import "../../../../ui/colors";
+@import "../../../../ui/sizes";
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-section__input {
+  margin-bottom: 1.625rem;
+}

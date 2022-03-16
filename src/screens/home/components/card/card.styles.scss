@@ -1,0 +1,8 @@
+@import "../../../../ui/colors";
+@import "../../../../ui/sizes";
+
+.card {
+  border-radius: $border_radius;
+  background-color: $white;
+  border: 1px solid $grey_light_2;
+}
