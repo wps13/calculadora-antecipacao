@@ -13,7 +13,8 @@ const Input = (props) => {
     type,
     label,
     name,
-    classname
+    classname,
+    helperText
   } = props;
 
   return (
@@ -30,6 +31,7 @@ const Input = (props) => {
         className="ui-input__input"
         id={name}
       />
+      <span className="ui-input__helper">{helperText}</span>
     </div>
   );
 };
@@ -41,7 +43,8 @@ Input.defaultProps = {
   type: "text",
   placeholder: "",
   onChanged: () => {},
-  classname: ""
+  classname: "",
+  helperText: ""
 };
 
 Input.propTypes = {
@@ -51,5 +54,6 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   onChanged: PropTypes.func,
-  classname: PropTypes.string
+  classname: PropTypes.string,
+  helperText: PropTypes.string
 };

@@ -29,7 +29,9 @@ const InputSection = (props) => {
         onChanged={onInstallmentsChanged}
         placeholder="12"
         classname="input-section__input"
+        helperText="Máximo de 12 parcelas"
       />
+
       <InputUI
         label="Informe o percentual de MDR *"
         value={mdrPercentage}
