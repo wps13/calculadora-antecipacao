@@ -14,7 +14,7 @@ const AntecipationSection = (props) => {
   } = props;
 
   return (
-    <div className="antecipation-section">
+    <div className="antecipation-section" data-testid="antecipation-section">
       <TextBlockUI label="Amanhã:" amount={tomorrowAmount} />
       <TextBlockUI label="Em 15 dias:" amount={fifteenDaysAmount} />
       <TextBlockUI label="Em 30 dias:" amount={thirtyDaysAmount} />
