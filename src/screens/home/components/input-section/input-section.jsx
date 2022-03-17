@@ -15,7 +15,7 @@ const InputSection = (props) => {
     onMdrPercentageChanged
   } = props;
   return (
-    <div className="input-section">
+    <div className="input-section" data-testid="input-section">
       <InputUI
         label="Informe o valor da venda *"
         value={saleAmount}
