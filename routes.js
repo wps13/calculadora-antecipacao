@@ -1,13 +1,13 @@
 import React from "react";
 import { HashRouter, Route, Routes as RRDRoutes } from "react-router-dom";
-import Title from "./src/components/title/title";
+import Home from "./src/screens/home/home";
 
 // eslint-disable-next-line import/no-cycle
 
 const Routes = () => (
   <HashRouter>
     <RRDRoutes>
-      <Route path="/" root exact element={<Title title="Hello, World" />} />
+      <Route path="/" root exact element={<Home />} />
     </RRDRoutes>
   </HashRouter>
 );

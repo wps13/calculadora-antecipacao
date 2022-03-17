@@ -17,5 +17,6 @@ Default.args = {
   placeholder: "Digite um texto",
   value: "",
   required: false,
-  type: "text"
+  type: "text",
+  helperText: "Minimo: R$ 1,00"
 };

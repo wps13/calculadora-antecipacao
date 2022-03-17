@@ -4,21 +4,32 @@
 .ui-input__container {
   display: flex;
   flex-direction: column;
+}
 
-  .ui-input__input {
-    border-radius: $border_radius;
-    line-height: $input__line-height;
+.ui-input__input {
+  border-radius: $border_radius;
+  line-height: $input__line-height;
 
-    border: 0.0625rem solid $grey_light_1;
-    height: 0.9375rem;
-    width: 15.6875rem;
-    padding: 0.625rem 0.875rem;
+  border: 0.0625rem solid $grey_light_1;
+  height: 2.3125rem;
+  width: 15.6875rem;
+  padding: 0.625rem 0.875rem;
+
+  &:focus,
+  &:focus-visible {
+    outline: 0.0625rem solid $blue_light_2;
   }
+}
 
-  .ui-input__label {
-    font-family: "Source Sans Pro";
-    font-size: $text_label;
-    margin-bottom: 0.375rem;
-    color: $grey_dark;
-  }
+.ui-input__label {
+  font-size: $text_label;
+  margin-bottom: 0.375rem;
+  color: $grey_dark;
+}
+
+.ui-input__helper {
+  font-size: 0.6875rem;
+  padding-top: 0.1875rem;
+  color: $grey_light_3;
+  font-weight: bold;
 }
