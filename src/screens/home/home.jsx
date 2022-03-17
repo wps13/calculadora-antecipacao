@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./home.styles.scss";
 
@@ -6,6 +6,22 @@ import { MainTitleUI, SectionTitleUI } from "../../ui";
 import { Card, InputSection, AntecipationSection, Divider } from "./components";
 
 const Home = () => {
+  const [saleAmount, onChangedSaleAmount] = useState("");
+  const [installments, onChangedInstallments] = useState("");
+  const [mdrPercentage, onChangedMdrPercentage] = useState("");
+
+  const handleSaleAmountChange = (amount) => {
+    onChangedSaleAmount(amount.target.value);
+  };
+
+  const handleInstallmentsChange = (value) => {
+    onChangedInstallments(value.target.value);
+  };
+
+  const handleIMdrPercentageChange = (percentage) => {
+    onChangedMdrPercentage(percentage.target.value);
+  };
+
   return (
     <div className="home">
       <Card>
@@ -14,19 +30,24 @@ const Home = () => {
             <MainTitleUI title="Simule sua antecipação" />
             <form>
               <InputSection
-                saleAmount="1"
-                installments="2"
-                mdrPercentage="3.2"
-                onInstallmentsChanged={() => {}}
-                onSaleAmountChanged={() => {}}
-                onMdrPercentageChanged={() => {}}
+                saleAmount={saleAmount}
+                installments={installments}
+                mdrPercentage={mdrPercentage}
+                onInstallmentsChanged={handleInstallmentsChange}
+                onSaleAmountChanged={handleSaleAmountChange}
+                onMdrPercentageChanged={handleIMdrPercentageChange}
               />
             </form>
           </div>
           <div className="card-container__results">
             <SectionTitleUI title="VOCÊ RECEBERÁ:" />
             <Divider />
-            <AntecipationSection />
+            <AntecipationSection
+              tomorrowAmount="0,00"
+              fifteenDaysAmount="0,00"
+              thirtyDaysAmount=""
+              ninetyDaysAmount=""
+            />
           </div>
         </div>
       </Card>
