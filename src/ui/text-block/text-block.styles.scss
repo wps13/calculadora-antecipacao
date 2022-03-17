@@ -2,8 +2,7 @@
 @import "../_sizes.scss";
 
 .text-block__container {
-  line-height: 2.875rem;
-  display: flex;
+  margin: 0.8125rem 0;
 
   .text-block__label {
     font-weight: 400;
@@ -18,7 +17,6 @@
   .text-block__amount {
     color: $blue_light;
     font-size: $text_message;
-    font-family: "Source Sans Pro";
     font-style: italic;
   }
 }
