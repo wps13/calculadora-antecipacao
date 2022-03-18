@@ -5,6 +5,10 @@ import "./home.styles.scss";
 import { MainTitleUI, SectionTitleUI } from "../../ui";
 import { Card, InputSection, AntecipationSection, Divider } from "./components";
 
+const MINIMUN_INSTALLMENTS = 1;
+const MAXIMUM_INSTALLMENTS = 12;
+const IS_NUMBER_PATTERN = /^[0-9]+$/;
+
 const Home = () => {
   const [saleAmount, onChangedSaleAmount] = useState("");
   const [installments, onChangedInstallments] = useState("");
@@ -15,7 +19,17 @@ const Home = () => {
   };
 
   const handleInstallmentsChange = (value) => {
-    onChangedInstallments(value.target.value);
+    const newInstallments = value.target.value;
+    const isValid = IS_NUMBER_PATTERN.test(newInstallments);
+
+    if (
+      newInstallments === "" ||
+      (isValid &&
+        newInstallments >= MINIMUN_INSTALLMENTS &&
+        newInstallments <= MAXIMUM_INSTALLMENTS)
+    ) {
+      onChangedInstallments(newInstallments.toString());
+    }
   };
 
   const handleIMdrPercentageChange = (percentage) => {
