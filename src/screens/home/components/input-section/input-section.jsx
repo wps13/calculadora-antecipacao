@@ -1,9 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
+import IntlCurrencyInput from "react-intl-currency-input";
 
 import { InputUI } from "../../../../ui";
 
 import "./input-section.styles.scss";
+
+const currencyConfig = {
+  locale: "pt-BR",
+  formats: {
+    number: {
+      BRL: {
+        style: "currency",
+        currency: "BRL",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }
+    }
+  }
+};
 
 const InputSection = (props) => {
   const {
@@ -18,11 +33,19 @@ const InputSection = (props) => {
     <div className="input-section" data-testid="input-section">
       <InputUI
         label="Informe o valor da venda *"
-        value={saleAmount}
-        onChanged={onSaleAmountChanged}
         placeholder="R$ 1.000,00"
         classname="input-section__input"
-      />
+        name="input-sale"
+      >
+        <IntlCurrencyInput
+          currency="BRL"
+          config={currencyConfig}
+          onChange={onSaleAmountChanged}
+          value={parseFloat(saleAmount)}
+          className="ui-input__input"
+          id="input-sale"
+        />
+      </InputUI>
       <InputUI
         label="Em quantas parcelas *"
         value={installments}
@@ -30,6 +53,7 @@ const InputSection = (props) => {
         placeholder="12"
         classname="input-section__input"
         helperText="Máximo de 12 parcelas"
+        name="input-installments"
       />
 
       <InputUI
@@ -37,6 +61,7 @@ const InputSection = (props) => {
         value={mdrPercentage}
         onChanged={onMdrPercentageChanged}
         placeholder="20%"
+        name="input-mdr"
       />
     </div>
   );

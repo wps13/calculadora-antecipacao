@@ -10,8 +10,8 @@ const Home = () => {
   const [installments, onChangedInstallments] = useState("");
   const [mdrPercentage, onChangedMdrPercentage] = useState("");
 
-  const handleSaleAmountChange = (amount) => {
-    onChangedSaleAmount(amount.target.value);
+  const handleSaleAmountChange = (_, unmaskedValue) => {
+    onChangedSaleAmount(unmaskedValue.toString());
   };
 
   const handleInstallmentsChange = (value) => {
