@@ -15,7 +15,8 @@ const Input = (props) => {
     name,
     classname,
     helperText,
-    children
+    children,
+    onKeyDown
   } = props;
 
   return (
@@ -33,6 +34,7 @@ const Input = (props) => {
           type={type}
           className="ui-input__input"
           id={name}
+          onKeyDown={onKeyDown}
         />
       )}
       {helperText && <span className="ui-input__helper">{helperText}</span>}
@@ -50,7 +52,8 @@ Input.defaultProps = {
   classname: "",
   helperText: "",
   children: null,
-  value: null
+  value: null,
+  onKeyDown: null
 };
 
 Input.propTypes = {
@@ -62,5 +65,6 @@ Input.propTypes = {
   onChanged: PropTypes.func,
   classname: PropTypes.string,
   helperText: PropTypes.string,
-  children: PropTypes.element
+  children: PropTypes.element,
+  onKeyDown: PropTypes.func
 };

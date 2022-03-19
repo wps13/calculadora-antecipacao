@@ -27,7 +27,8 @@ const InputSection = (props) => {
     installments,
     onInstallmentsChanged,
     mdrPercentage,
-    onMdrPercentageChanged
+    onMdrPercentageChanged,
+    onSubmitInput
   } = props;
   return (
     <div className="input-section" data-testid="input-section">
@@ -44,6 +45,7 @@ const InputSection = (props) => {
           value={parseFloat(saleAmount)}
           className="ui-input__input"
           id="input-sale"
+          onKeyPress={onSubmitInput}
         />
       </InputUI>
       <InputUI
@@ -54,6 +56,7 @@ const InputSection = (props) => {
         classname="input-section__input"
         helperText="Máximo de 12 parcelas"
         name="input-installments"
+        onKeyDown={onSubmitInput}
       />
 
       <InputUI
@@ -62,6 +65,7 @@ const InputSection = (props) => {
         onChanged={onMdrPercentageChanged}
         placeholder="20%"
         name="input-mdr"
+        onKeyDown={onSubmitInput}
       />
     </div>
   );
@@ -75,5 +79,6 @@ InputSection.propTypes = {
   installments: PropTypes.string.isRequired,
   onInstallmentsChanged: PropTypes.func.isRequired,
   mdrPercentage: PropTypes.string.isRequired,
-  onMdrPercentageChanged: PropTypes.func.isRequired
+  onMdrPercentageChanged: PropTypes.func.isRequired,
+  onSubmitInput: PropTypes.func.isRequired
 };

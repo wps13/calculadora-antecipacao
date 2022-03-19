@@ -13,6 +13,7 @@ describe("Home/Components - InputSection", () => {
         onMdrPercentageChanged={jest.fn}
         installments="2"
         mdrPercentage="2.9"
+        onSubmitInput={jest.fn}
       />
     );
 
