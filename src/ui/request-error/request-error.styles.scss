@@ -1,0 +1,19 @@
+@import "../_colors.scss";
+
+.request-error__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & button {
+    padding: 0.5rem 1rem;
+    background-color: $blue_dark;
+    color: $white;
+    border-radius: 0.25rem;
+    font-weight: bold;
+  }
+}
+
+.request-error__message {
+  font-size: 1.125rem;
+}

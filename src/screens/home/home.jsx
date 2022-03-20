@@ -1,10 +1,16 @@
+/* eslint-disable max-len */
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import axios from "axios";
 
 import "./home.styles.scss";
 
-import { MainTitleUI, SectionTitleUI, LoadingUI } from "../../ui";
+import {
+  MainTitleUI,
+  SectionTitleUI,
+  LoadingUI,
+  RequestErrorUI
+} from "../../ui";
 import { Card, InputSection, AntecipationSection, Divider } from "./components";
 
 import {
@@ -83,33 +89,37 @@ const Home = () => {
     setMdrPercentage(percentageValue.toString());
   };
 
+  const requestAntecipationData = () => {
+    const isMDREmpty = mdrPercentage === "";
+    const isSaleEmpty = saleAmount === "";
+    const isInstallmentsEmpty = installments === "";
+
+    if (isMDREmpty) {
+      // set error for mdr
+    }
+
+    if (isSaleEmpty) {
+      // set error for sale
+    }
+
+    if (isInstallmentsEmpty) {
+      // set error for installments
+    }
+
+    if (!isMDREmpty && !isSaleEmpty && !isInstallmentsEmpty) {
+      const saleInCents = convertSaleToCents(saleAmount);
+
+      mutationPostAntecipation.mutate({
+        amount: saleInCents,
+        installments: parseInt(installments, 10),
+        mdr: parseInt(mdrPercentage, 10)
+      });
+    }
+  };
+
   const handleSubmitByEnterInput = (e) => {
     if (e.code === "Enter") {
-      const isMDREmpty = mdrPercentage === "";
-      const isSaleEmpty = saleAmount === "";
-      const isInstallmentsEmpty = installments === "";
-
-      if (isMDREmpty) {
-        // set error for mdr
-      }
-
-      if (isSaleEmpty) {
-        // set error for sale
-      }
-
-      if (isInstallmentsEmpty) {
-        // set error for installments
-      }
-
-      if (!isMDREmpty && !isSaleEmpty && !isInstallmentsEmpty) {
-        const saleInCents = convertSaleToCents(saleAmount);
-
-        mutationPostAntecipation.mutate({
-          amount: saleInCents,
-          installments: parseInt(installments, 10),
-          mdr: parseInt(mdrPercentage, 10)
-        });
-      }
+      requestAntecipationData();
     }
   };
 
@@ -126,24 +136,27 @@ const Home = () => {
 
   if (hasErroroTimeout) {
     return (
-      <div>
-        <p>Algo deu errado aqui!</p>
+      <div className="home">
+        <RequestErrorUI message="Ocorreu um erro na requesição, retentando..." />
       </div>
     );
   }
 
   if (hasErroronServer) {
     return (
-      <div>
-        <p>Algo deu errado no servidor!</p>
+      <div className="home">
+        <RequestErrorUI message="Servidor indisponivel, tente novamente mais tarde" />
       </div>
     );
   }
 
   if (mutationPostAntecipation?.isPaused) {
     return (
-      <div>
-        <p>Parece que você está sem internet. Gostaria de tentar novamente?</p>
+      <div className="home">
+        <RequestErrorUI
+          message="Parece que você está sem internet. Gostaria de tentar novamente?"
+          onRetry={requestAntecipationData}
+        />
       </div>
     );
   }
