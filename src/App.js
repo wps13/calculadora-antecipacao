@@ -1,13 +1,19 @@
 import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+
 import "./App.css";
 
 import Routes from "../routes";
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <div className="App">
-      <Routes />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <Routes />
+      </div>
+    </QueryClientProvider>
   );
 }
 

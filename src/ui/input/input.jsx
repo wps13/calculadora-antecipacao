@@ -14,7 +14,9 @@ const Input = (props) => {
     label,
     name,
     classname,
-    helperText
+    helperText,
+    children,
+    onKeyDown
   } = props;
 
   return (
@@ -22,16 +24,20 @@ const Input = (props) => {
       <label className="ui-input__label" htmlFor={name}>
         {label}
       </label>
-      <input
-        onChange={onChanged}
-        value={value}
-        placeholder={placeholder}
-        required={required}
-        type={type}
-        className="ui-input__input"
-        id={name}
-      />
-      <span className="ui-input__helper">{helperText}</span>
+      {children}
+      {!children && (
+        <input
+          onChange={onChanged}
+          value={value}
+          placeholder={placeholder}
+          required={required}
+          type={type}
+          className="ui-input__input"
+          id={name}
+          onKeyDown={onKeyDown}
+        />
+      )}
+      {helperText && <span className="ui-input__helper">{helperText}</span>}
     </div>
   );
 };
@@ -44,16 +50,21 @@ Input.defaultProps = {
   placeholder: "",
   onChanged: () => {},
   classname: "",
-  helperText: ""
+  helperText: "",
+  children: null,
+  value: null,
+  onKeyDown: null
 };
 
 Input.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   required: PropTypes.bool,
   type: PropTypes.string,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   onChanged: PropTypes.func,
   classname: PropTypes.string,
-  helperText: PropTypes.string
+  helperText: PropTypes.string,
+  children: PropTypes.element,
+  onKeyDown: PropTypes.func
 };
