@@ -9,7 +9,7 @@ module.exports = (mode) => {
   return {
     entry: path.join(path.resolve(__dirname), "../src/index.jsx"),
     output: {
-      path: path.join(path.resolve(__dirname), "../dist"),
+      path: path.join(path.resolve(__dirname), "../build"),
       filename: "bundle.js"
     },
     resolve: {
