@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import "./text-block.styles.scss";
 
 const TextBlock = (props) => {
-  const { label, amount } = props;
+  const { label, amount, testID } = props;
 
   return (
-    <p className="text-block__container">
+    <p className="text-block__container" data-testid={testID}>
       <span className="text-block__label" data-testid="text-block__label">
         {label}
       </span>
@@ -23,10 +23,12 @@ export default TextBlock;
 
 TextBlock.defaultProps = {
   label: "",
-  amount: ""
+  amount: "",
+  testID: ""
 };
 
 TextBlock.propTypes = {
   label: PropTypes.string,
-  amount: PropTypes.string
+  amount: PropTypes.string,
+  testID: PropTypes.string
 };

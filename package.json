@@ -19,7 +19,9 @@
     "lint": "eslint ./src/**/**.js",
     "lint:fix": "eslint ./src/**/**.js --fix",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "cypress:open": "cypress open",
+    "cypress:clear-cache": "cypress cache clear"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,6 +52,7 @@
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.7.1",
+    "cypress": "^9.5.2",
     "eslint": "^8.11.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
