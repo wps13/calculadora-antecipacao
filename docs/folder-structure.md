@@ -4,17 +4,25 @@
 
 ```
 project
-|_ __mocks__
+|_ __mocks__/
+|   mocks used in the application, included ones for testing.
 |
-|_ .storybook
+|_ .storybook/
+|   storybook configuration files
 |
-|_ config
+|_ config/
+|  webpack configuration files, for both development and production
 |
-|_ docs
+|_ cypress/
+|  integration test files
 |
-|_ public
+|_ docs/
+|  project documentation
 |
-|_ src
+|_ public/
+|  production related files, such as the index.html, favicon
+|
+|_ src/
 | README.md
 | routes.js
 ```
@@ -22,15 +30,21 @@ project
 ## src
 
 ```
-src
-|_ ui
-|_ __tests__
-|_ stories
-|_ screens
-|  |_ home
+src/
+|_ ui/
+|  basic ui components (See more on UI Components doc)
+|
+|_ __tests__/
+|  tests for ui components and screens components
+|
+|_ stories/
+| storybook stories for ui
+|
+|_ screens/
+|  |_ home/
 |     home.jsx
 |     home.styles.scss
-|     |_ components
+|     |_ components/
 |        index.js
 |        |_ card
 |           card.jsx

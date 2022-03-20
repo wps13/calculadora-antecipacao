@@ -1,21 +1,72 @@
-# Calculadora de antecipação
+# Antecipation Calculator
 
-### **How to use**
+This project is about calculation antecipation given the sales amount, installment and mdr percentage.
 
-Clone the repository.
+## Requirements
 
-Install the dependencies
+- Node.js: 16.4
 
-`yarn`
+## Documentation
 
-Start the aplication
+- [Folder structure](./docs/folder-structure.md)
+- [Naming Convetion](./docs/naming.md)
+- [UI Components](./docs/ui-components.md)
+- [Libraries Used and why them](./docs/libs.md)
 
-`yarn start`
+## Commands
 
-Initialize jest
+### **Installing dependencies**
 
-`yarn test`
+```
+yarn install
+```
 
-Generate the build
+### **Starting application**
 
-`yarn build`
+```
+yarn start
+```
+
+it will run on http://localhost:8080/
+
+### **Running unit test**
+
+It will run all components tests, made with react testing library.
+
+```
+yarn test
+```
+
+### **Running e2e test**
+
+All tests were written using cypress, storing them inside the `cypress/integration` folder.
+
+```
+yarn cypress:open
+```
+
+### **Generating production build**
+
+```
+yarn build
+```
+
+### **Checking linting**
+
+```
+yarn lint
+```
+
+### **Fixing linting errors**
+
+```
+yarn lint:fix
+```
+
+### **Running storybook**
+
+This command will start storybook that was used to build ui components.
+
+```
+yarn storybook
+```

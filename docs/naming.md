@@ -15,3 +15,7 @@ Since the style is made using SCSS, all files are named using the component name
 ### Tests
 
 Tests use the pattern `component-name.test.js`.
+
+### Storybook stories
+
+Stories should be named using the component name followed by .stories.jsx: 'component-name.stories.jsx'
