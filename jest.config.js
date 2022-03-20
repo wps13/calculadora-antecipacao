@@ -28,5 +28,6 @@ module.exports = {
       "<rootDir>/__mocks__/fileMock.js",
     "\\.(css|less|sass|scss)$": "identity-obj-proxy"
   },
+  modulePathIgnorePatterns: ["<rootDir>/cypress"],
   testEnvironment: "jest-environment-jsdom"
 };

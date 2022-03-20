@@ -15,10 +15,26 @@ const AntecipationSection = (props) => {
 
   return (
     <div className="antecipation-section" data-testid="antecipation-section">
-      <TextBlockUI label="Amanhã:" amount={tomorrowAmount} />
-      <TextBlockUI label="Em 15 dias:" amount={fifteenDaysAmount} />
-      <TextBlockUI label="Em 30 dias:" amount={thirtyDaysAmount} />
-      <TextBlockUI label="Em 90 dias:" amount={ninetyDaysAmount} />
+      <TextBlockUI
+        label="Amanhã:"
+        amount={tomorrowAmount}
+        testID="tomorrow-result"
+      />
+      <TextBlockUI
+        label="Em 15 dias:"
+        amount={fifteenDaysAmount}
+        testID="fifteen-result"
+      />
+      <TextBlockUI
+        label="Em 30 dias:"
+        amount={thirtyDaysAmount}
+        testID="thirty-result"
+      />
+      <TextBlockUI
+        label="Em 90 dias:"
+        amount={ninetyDaysAmount}
+        testID="ninety-result"
+      />
     </div>
   );
 };
