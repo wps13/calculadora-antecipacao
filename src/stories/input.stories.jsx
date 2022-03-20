@@ -12,11 +12,23 @@ const Template = (args) => <InputUI {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  label: "Valor",
+  label: "Value",
   onChanged: () => {},
-  placeholder: "Digite um texto",
+  placeholder: "R$ 10",
   value: "",
   required: false,
   type: "text",
-  helperText: "Minimo: R$ 1,00"
+  helperText: "Minimum: R$ 1,00"
+};
+
+export const Invalid = (args) => <InputUI {...args} classname="invalid" />;
+
+Invalid.args = {
+  label: "Mensagem",
+  onChanged: () => {},
+  placeholder: "Hello, world",
+  value: "",
+  required: true,
+  type: "text",
+  helperText: "Field can't be empty"
 };

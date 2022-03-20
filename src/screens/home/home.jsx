@@ -39,7 +39,11 @@ const Home = () => {
   const [ninetyDaysAmount, setNinetyDaysAmount] = useState("");
 
   const [hasErroronServer, setHasErrorOnServer] = useState(false);
-  const [hasErroroTimeout, setHasErrorOTimeout] = useState(false);
+  const [hasErrorOnTimeout, sethasErrorOnTimeout] = useState(false);
+
+  const [invalidSaleAmount, setInvalidSaleAmout] = useState(false);
+  const [invalidInstallments, setInvalidInstallments] = useState(false);
+  const [invalidMDR, setInvalidMDR] = useState(false);
 
   const mutationPostAntecipation = useMutation(
     (antecipationData) => axios.post(API_URL, antecipationData),
@@ -53,17 +57,21 @@ const Home = () => {
       onError: async (error) => {
         const code = error?.response?.status;
         if (code >= CLIENT_ERROR_HTTP_MIN && code <= CLIENT_ERROR_HTTP_MAX) {
-          setHasErrorOTimeout(true);
+          sethasErrorOnTimeout(true);
         }
 
         if (code >= SERVER_ERROR_HTTP_MIN && code <= SERVER_ERROR_HTTP_MAX) {
           setHasErrorOnServer(true);
         }
-      }
+      },
+      retry: 2
     }
   );
 
   const handleSaleAmountChange = (_, unmaskedValue) => {
+    if (unmaskedValue !== "" && invalidSaleAmount) {
+      setInvalidSaleAmout(false);
+    }
     setSaleAmount(unmaskedValue.toString());
   };
 
@@ -77,6 +85,10 @@ const Home = () => {
       return;
     }
 
+    if (newInstallments !== "" && invalidInstallments) {
+      setInvalidInstallments(false);
+    }
+
     setInstallments(newInstallments.toString());
   };
 
@@ -86,6 +98,11 @@ const Home = () => {
     if (percentageValue !== "" && !isMDRBetweenBoundaries(percentageValue)) {
       return;
     }
+
+    if (percentageValue !== "" && invalidMDR) {
+      setInvalidMDR(false);
+    }
+
     setMdrPercentage(percentageValue.toString());
   };
 
@@ -95,15 +112,15 @@ const Home = () => {
     const isInstallmentsEmpty = installments === "";
 
     if (isMDREmpty) {
-      // set error for mdr
+      setInvalidMDR(true);
     }
 
     if (isSaleEmpty) {
-      // set error for sale
+      setInvalidSaleAmout(true);
     }
 
     if (isInstallmentsEmpty) {
-      // set error for installments
+      setInvalidInstallments(true);
     }
 
     if (!isMDREmpty && !isSaleEmpty && !isInstallmentsEmpty) {
@@ -123,6 +140,14 @@ const Home = () => {
     }
   };
 
+  if (!navigator.onLine) {
+    return (
+      <div className="home">
+        <RequestErrorUI message="Parece que você está sem internet. Confira sua conexão e tente novamente." />
+      </div>
+    );
+  }
+
   if (
     mutationPostAntecipation?.isLoading &&
     !mutationPostAntecipation?.isError
@@ -134,7 +159,7 @@ const Home = () => {
     );
   }
 
-  if (hasErroroTimeout) {
+  if (hasErrorOnTimeout) {
     return (
       <div className="home">
         <RequestErrorUI message="Ocorreu um erro na requesição, retentando..." />
@@ -176,6 +201,9 @@ const Home = () => {
                 onSaleAmountChanged={handleSaleAmountChange}
                 onMdrPercentageChanged={handleIMdrPercentageChange}
                 onSubmitInput={handleSubmitByEnterInput}
+                invalidSaleAmount={invalidSaleAmount}
+                invalidInstallments={invalidInstallments}
+                invalidMDR={invalidMDR}
               />
             </form>
           </div>

@@ -33,3 +33,12 @@
   color: $grey_light_3;
   font-weight: bold;
 }
+
+.ui-input__container.invalid {
+  .ui-input__input {
+    border-color: $red;
+  }
+  .ui-input__helper {
+    color: $red;
+  }
+}

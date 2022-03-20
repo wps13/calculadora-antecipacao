@@ -28,15 +28,19 @@ const InputSection = (props) => {
     onInstallmentsChanged,
     mdrPercentage,
     onMdrPercentageChanged,
-    onSubmitInput
+    onSubmitInput,
+    invalidSaleAmount,
+    invalidInstallments,
+    invalidMDR
   } = props;
   return (
     <div className="input-section" data-testid="input-section">
       <InputUI
         label="Informe o valor da venda *"
         placeholder="R$ 1.000,00"
-        classname="input-section__input"
+        classname={`input-section__input ${invalidSaleAmount ? "invalid" : ""}`}
         name="input-sale"
+        helperText={invalidSaleAmount ? "Insira o valor da venda" : null}
       >
         <IntlCurrencyInput
           currency="BRL"
@@ -53,10 +57,14 @@ const InputSection = (props) => {
         value={installments}
         onChanged={onInstallmentsChanged}
         placeholder="12"
-        classname="input-section__input"
-        helperText="Máximo de 12 parcelas"
         name="input-installments"
         onKeyDown={onSubmitInput}
+        classname={`input-section__input ${
+          invalidInstallments ? "invalid" : ""
+        }`}
+        helperText={
+          invalidInstallments ? "Insira as parcelas" : "Máximo de 12 parcelas"
+        }
       />
 
       <InputUI
@@ -66,6 +74,8 @@ const InputSection = (props) => {
         placeholder="20%"
         name="input-mdr"
         onKeyDown={onSubmitInput}
+        classname={invalidMDR ? "invalid" : ""}
+        helperText={invalidMDR ? "Insira o percentual de MDR" : null}
       />
     </div>
   );
@@ -80,5 +90,8 @@ InputSection.propTypes = {
   onInstallmentsChanged: PropTypes.func.isRequired,
   mdrPercentage: PropTypes.string.isRequired,
   onMdrPercentageChanged: PropTypes.func.isRequired,
-  onSubmitInput: PropTypes.func.isRequired
+  onSubmitInput: PropTypes.func.isRequired,
+  invalidSaleAmount: PropTypes.bool.isRequired,
+  invalidInstallments: PropTypes.bool.isRequired,
+  invalidMDR: PropTypes.bool.isRequired
 };
