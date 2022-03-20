@@ -4,7 +4,7 @@ import axios from "axios";
 
 import "./home.styles.scss";
 
-import { MainTitleUI, SectionTitleUI } from "../../ui";
+import { MainTitleUI, SectionTitleUI, LoadingUI } from "../../ui";
 import { Card, InputSection, AntecipationSection, Divider } from "./components";
 
 import {
@@ -21,6 +21,13 @@ import {
   SERVER_ERROR_HTTP_MAX,
   SERVER_ERROR_HTTP_MIN
 } from "../../utils/constants";
+
+// const API_SLOW =
+//   "https://frontend-challenge-7bu3nxh76a-uc.a.run.app?delay=1000";
+// const API_TIMEOUT =
+//   "https://frontend-challenge-7bu3nxh76a-uc.a.run.app?timeout";
+// const API_SERVER_ERROR =
+//   "https://frontend-challenge-7bu3nxh76a-uc.a.run.app?internalError";
 
 const Home = () => {
   const [saleAmount, setSaleAmount] = useState("");
@@ -122,8 +129,8 @@ const Home = () => {
     !mutationPostAntecipation?.isError
   ) {
     return (
-      <div>
-        <p>Loading...</p>
+      <div className="home">
+        <LoadingUI message="Carregando sua antecipação" />
       </div>
     );
   }
@@ -140,6 +147,14 @@ const Home = () => {
     return (
       <div>
         <p>Algo deu errado no servidor!</p>
+      </div>
+    );
+  }
+
+  if (mutationPostAntecipation?.isPaused) {
+    return (
+      <div>
+        <p>Parece que você está sem internet. Gostaria de tentar novamente?</p>
       </div>
     );
   }
