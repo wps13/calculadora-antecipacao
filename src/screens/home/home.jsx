@@ -22,13 +22,6 @@ import {
   SERVER_ERROR_HTTP_MIN
 } from "../../utils/constants";
 
-// const API_SLOW =
-//   "https://frontend-challenge-7bu3nxh76a-uc.a.run.app?delay=1000";
-// const API_TIMEOUT =
-//   "https://frontend-challenge-7bu3nxh76a-uc.a.run.app?timeout";
-// const API_SERVER_ERROR =
-//   "https://frontend-challenge-7bu3nxh76a-uc.a.run.app?internalError";
-
 const Home = () => {
   const [saleAmount, setSaleAmount] = useState("");
   const [installments, setInstallments] = useState("");
@@ -65,13 +58,11 @@ const Home = () => {
   );
 
   const handleSaleAmountChange = (_, unmaskedValue) => {
-    console.log("sale", unmaskedValue.toString());
     setSaleAmount(unmaskedValue.toString());
   };
 
   const handleInstallmentsChange = (value) => {
     const newInstallments = value.target.value;
-    console.log("installments", newInstallments);
 
     if (
       newInstallments !== "" &&
@@ -94,8 +85,6 @@ const Home = () => {
 
   const handleSubmitByEnterInput = (e) => {
     if (e.code === "Enter") {
-      console.log("submit by input");
-
       const isMDREmpty = mdrPercentage === "";
       const isSaleEmpty = saleAmount === "";
       const isInstallmentsEmpty = installments === "";
