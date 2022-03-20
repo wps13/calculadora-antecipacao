@@ -14,7 +14,7 @@ const Template = (args) => <LoadingUI {...args} />;
 export const Default = Template.bind({});
 
 export const WithShortMessage = (args) => (
-  <LoadingUI {...args} message="Carregando dados" />
+  <LoadingUI {...args} message="Loading data" />
 );
 
 export const WithLongMessage = (args) => (
