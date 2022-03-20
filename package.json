@@ -1,6 +1,7 @@
 {
-  "name": "calculadora-antecipacao",
+  "name": "antecipation-calculator",
   "version": "1.0.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.17.2",
