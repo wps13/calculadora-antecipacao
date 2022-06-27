@@ -25,43 +25,55 @@ import {
   CLIENT_ERROR_HTTP_MIN,
   CLIENT_ERROR_HTTP_MAX,
   SERVER_ERROR_HTTP_MAX,
-  SERVER_ERROR_HTTP_MIN
+  SERVER_ERROR_HTTP_MIN,
+  REQUEST_TEXTS,
+  HOME_TEXTS
 } from "../../utils/constants";
 
 const Home = () => {
-  const [saleAmount, setSaleAmount] = useState("");
-  const [installments, setInstallments] = useState("");
-  const [mdrPercentage, setMdrPercentage] = useState("");
+  const [inputData, setInputData] = useState({
+    saleAmount: "",
+    installments: "",
+    mdrPercentage: ""
+  });
 
-  const [fifteenDaysAmount, setFifteenDaysAmout] = useState("");
-  const [tomorrowAmount, setTomorrowAmount] = useState("");
-  const [thirtyDaysAmount, setThirtyDaysAmount] = useState("");
-  const [ninetyDaysAmount, setNinetyDaysAmount] = useState("");
+  const [response, setResponse] = useState({
+    fifteenDaysAmount: "",
+    tomorrowAmount: "",
+    thirtyDaysAmount: "",
+    ninetyDaysAmount: ""
+  });
 
-  const [hasErroronServer, setHasErrorOnServer] = useState(false);
-  const [hasErrorOnTimeout, sethasErrorOnTimeout] = useState(false);
+  const [errors, setErrors] = useState({
+    server: false,
+    timeout: false
+  });
 
-  const [invalidSaleAmount, setInvalidSaleAmout] = useState(false);
-  const [invalidInstallments, setInvalidInstallments] = useState(false);
-  const [invalidMDR, setInvalidMDR] = useState(false);
+  const [invalid, setInvalid] = useState({
+    saleAmount: false,
+    installments: false,
+    mdrPercentage: false
+  });
 
   const mutationPostAntecipation = useMutation(
     (antecipationData) => axios.post(API_URL, antecipationData),
     {
       onSuccess: (responseData) => {
-        setFifteenDaysAmout(convertCentToReal({ responseData, period: "15" }));
-        setTomorrowAmount(convertCentToReal({ responseData, period: "1" }));
-        setThirtyDaysAmount(convertCentToReal({ responseData, period: "30" }));
-        setNinetyDaysAmount(convertCentToReal({ responseData, period: "90" }));
+        setResponse({
+          fifteenDaysAmount: convertCentToReal({ responseData, period: "15" }),
+          tomorrowAmount: convertCentToReal({ responseData, period: "1" }),
+          thirtyDaysAmount: convertCentToReal({ responseData, period: "30" }),
+          ninetyDaysAmount: convertCentToReal({ responseData, period: "90" })
+        });
       },
       onError: async (error) => {
         const code = error?.response?.status;
         if (code >= CLIENT_ERROR_HTTP_MIN && code <= CLIENT_ERROR_HTTP_MAX) {
-          sethasErrorOnTimeout(true);
+          setErrors((previousState) => ({ ...previousState, timeout: true }));
         }
 
         if (code >= SERVER_ERROR_HTTP_MIN && code <= SERVER_ERROR_HTTP_MAX) {
-          setHasErrorOnServer(true);
+          setErrors((previousState) => ({ ...previousState, server: true }));
         }
       },
       retry: 2
@@ -69,67 +81,56 @@ const Home = () => {
   );
 
   const handleSaleAmountChange = (_, unmaskedValue) => {
-    if (unmaskedValue !== "" && invalidSaleAmount) {
-      setInvalidSaleAmout(false);
+    if (unmaskedValue !== "" && invalid.saleAmount) {
+      setInvalid((previousState) => ({ ...previousState, saleAmount: false }));
     }
-    setSaleAmount(unmaskedValue.toString());
+    setInputData((previousState) => ({
+      ...previousState,
+      saleAmount: unmaskedValue.toString()
+    }));
+  };
+
+  const handleValue = (value, type, checkFn) => {
+    const newValue = value.target.value;
+
+    if (newValue !== "" && !checkFn(newValue)) {
+      return;
+    }
+
+    if (newValue !== "" && invalid.Value) {
+      setInvalid((previousState) => ({ ...previousState, [type]: false }));
+    }
+    setInputData((previousState) => ({
+      ...previousState,
+      [type]: newValue.toString()
+    }));
   };
 
   const handleInstallmentsChange = (value) => {
-    const newInstallments = value.target.value;
-
-    if (
-      newInstallments !== "" &&
-      !isInstallmentBetweenBoundaries(newInstallments)
-    ) {
-      return;
-    }
-
-    if (newInstallments !== "" && invalidInstallments) {
-      setInvalidInstallments(false);
-    }
-
-    setInstallments(newInstallments.toString());
+    handleValue(value, "installments", isInstallmentBetweenBoundaries);
   };
 
   const handleIMdrPercentageChange = (percentage) => {
-    const percentageValue = percentage.target.value;
-
-    if (percentageValue !== "" && !isMDRBetweenBoundaries(percentageValue)) {
-      return;
-    }
-
-    if (percentageValue !== "" && invalidMDR) {
-      setInvalidMDR(false);
-    }
-
-    setMdrPercentage(percentageValue.toString());
+    handleValue(percentage, "mdrPercentage", isMDRBetweenBoundaries);
   };
 
   const requestAntecipationData = () => {
-    const isMDREmpty = mdrPercentage === "";
-    const isSaleEmpty = saleAmount === "";
-    const isInstallmentsEmpty = installments === "";
+    let invalidCount = 0;
 
-    if (isMDREmpty) {
-      setInvalidMDR(true);
-    }
+    Object.keys(inputData).forEach((key) => {
+      if (inputData[key] === "") {
+        setInvalid((previousState) => ({ ...previousState, [key]: true }));
+        invalidCount += 1;
+      }
+    });
 
-    if (isSaleEmpty) {
-      setInvalidSaleAmout(true);
-    }
-
-    if (isInstallmentsEmpty) {
-      setInvalidInstallments(true);
-    }
-
-    if (!isMDREmpty && !isSaleEmpty && !isInstallmentsEmpty) {
-      const saleInCents = convertSaleToCents(saleAmount);
+    if (invalidCount === 0) {
+      const saleInCents = convertSaleToCents(inputData.saleAmount);
 
       mutationPostAntecipation.mutate({
         amount: saleInCents,
-        installments: parseInt(installments, 10),
-        mdr: parseInt(mdrPercentage, 10)
+        installments: parseInt(inputData.installments, 10),
+        mdr: parseInt(inputData.mdrPercentage, 10)
       });
     }
   };
@@ -143,7 +144,7 @@ const Home = () => {
   if (!navigator.onLine) {
     return (
       <div className="home">
-        <RequestErrorUI message="Parece que você está sem internet. Confira sua conexão e tente novamente." />
+        <RequestErrorUI message={REQUEST_TEXTS.OFFLINE} />
       </div>
     );
   }
@@ -154,23 +155,23 @@ const Home = () => {
   ) {
     return (
       <div className="home">
-        <LoadingUI message="Carregando sua antecipação" />
+        <LoadingUI message={REQUEST_TEXTS.LOADING} />
       </div>
     );
   }
 
-  if (hasErrorOnTimeout) {
+  if (errors.timeout) {
     return (
       <div className="home">
-        <RequestErrorUI message="Ocorreu um erro na requesição, retentando..." />
+        <RequestErrorUI message={REQUEST_TEXTS.TIMEOUT} />
       </div>
     );
   }
 
-  if (hasErroronServer) {
+  if (errors.server) {
     return (
       <div className="home">
-        <RequestErrorUI message="Servidor indisponivel, tente novamente mais tarde" />
+        <RequestErrorUI message={REQUEST_TEXTS.SERVER_ERROR} />
       </div>
     );
   }
@@ -179,7 +180,7 @@ const Home = () => {
     return (
       <div className="home">
         <RequestErrorUI
-          message="Parece que você está sem internet. Gostaria de tentar novamente?"
+          message={REQUEST_TEXTS.CONNECTION_FAILED}
           onRetry={requestAntecipationData}
         />
       </div>
@@ -191,30 +192,30 @@ const Home = () => {
       <Card>
         <div className="card-container">
           <div className="card-container__inputs">
-            <MainTitleUI title="Simule sua antecipação" />
+            <MainTitleUI title={HOME_TEXTS.INPUT_TITLE} />
             <form>
               <InputSection
-                saleAmount={saleAmount}
-                installments={installments}
-                mdrPercentage={mdrPercentage}
+                saleAmount={inputData.saleAmount}
+                installments={inputData.installments}
+                mdrPercentage={inputData.mdrPercentage}
                 onInstallmentsChanged={handleInstallmentsChange}
                 onSaleAmountChanged={handleSaleAmountChange}
                 onMdrPercentageChanged={handleIMdrPercentageChange}
                 onSubmitInput={handleSubmitByEnterInput}
-                invalidSaleAmount={invalidSaleAmount}
-                invalidInstallments={invalidInstallments}
-                invalidMDR={invalidMDR}
+                invalidSaleAmount={invalid.saleAmount}
+                invalidInstallments={invalid.installments}
+                invalidMDR={invalid.mdrPercentage}
               />
             </form>
           </div>
           <div className="card-container__results">
-            <SectionTitleUI title="VOCÊ RECEBERÁ:" />
+            <SectionTitleUI title={HOME_TEXTS.RESULTS_TITLE} />
             <Divider />
             <AntecipationSection
-              tomorrowAmount={tomorrowAmount}
-              fifteenDaysAmount={fifteenDaysAmount}
-              thirtyDaysAmount={thirtyDaysAmount}
-              ninetyDaysAmount={ninetyDaysAmount}
+              tomorrowAmount={response.tomorrowAmount}
+              fifteenDaysAmount={response.fifteenDaysAmount}
+              thirtyDaysAmount={response.thirtyDaysAmount}
+              ninetyDaysAmount={response.ninetyDaysAmount}
             />
           </div>
         </div>

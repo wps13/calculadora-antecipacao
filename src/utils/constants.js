@@ -10,3 +10,14 @@ export const CLIENT_ERROR_HTTP_MIN = 400;
 export const CLIENT_ERROR_HTTP_MAX = 499;
 export const SERVER_ERROR_HTTP_MIN = 500;
 export const SERVER_ERROR_HTTP_MAX = 599;
+export const REQUEST_TEXTS = {
+  OFFLINE: "Parece que você está sem internet. Confira sua conexão e tente novamente.",
+  LOADING: "Carregando sua antecipação",
+  TIMEOUT: "Ocorreu um erro na requesição, retentando...",
+  SERVER_ERROR: "Servidor indisponivel, tente novamente mais tarde",
+  CONNECTION_FAILED: "Parece que você está sem internet. Gostaria de tentar novamente?"
+};
+export const HOME_TEXTS = {
+  INPUT_TITLE: "Simule sua antecipação",
+  RESULTS_TITLE: "VOCÊ RECEBERÁ:"
+};
